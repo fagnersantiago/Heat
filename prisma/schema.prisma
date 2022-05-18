@@ -11,5 +11,25 @@ datasource db {
 }
 
 model USER {
-  id String @id @default(uuid())
+  id         String @id @default(uuid())
+  name       String
+  github_id  Int
+  avatar_url String
+  login      String
+
+  //Cria nome da tabela
+  messages Message[]
+  @@map("users")
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  text       String
+  created_at DateTime @default(now())
+
+  user USER @relation(fields: [user_id], references: [id])
+
+  user_id String
+
+  @@map("messages")
 }
